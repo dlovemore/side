@@ -5,4 +5,4 @@ import os
 sys.path = [os.getcwd()] + sys.path
 
 import replay
-replay.main()
+replay.main(*sys.argv)

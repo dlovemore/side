@@ -10,12 +10,12 @@ ps2 = '... '
 def indent(s, prefix = '    '):
     return "".join([prefix+line for line in s.splitlines(keepends=True)])
 
-def testfile(filename, console=None):
+def runfile(file, console=None):
     """
-    Any interactive session can be recorded and rerun. The contents of the file
-    is copied to the output. Anything in the file starting with a python prompt
-    is evaluated. The output is captured and added to the output after the
-    echoed input.
+    Any interactive session can be recorded and rerun. The contents of
+    the open file is copied to the output. Anything in the file starting
+    with a python prompt is evaluated. The output is captured and added
+    to the output after the echoed input.
 
         >>> 3+4
         7
@@ -36,12 +36,11 @@ def testfile(filename, console=None):
     Use a diff tool on input and output to show changes and for checking against
     expected output.
     """
-    filename = sys.stdin if filename == '-' else open(filename)
     console = console or Console()
     last_prefix = None
     prompt = ps1
     prompt_re = re.compile(r'^(\s*#?\s*)('+re.escape(ps1)+r'|'+re.escape(ps2)+r'|)(.*)')
-    for line in filename:
+    for line in file:
         mo = prompt_re.match(line)
         prefix, read_prompt, code = mo.groups()
         if read_prompt:
@@ -65,21 +64,20 @@ def testfile(filename, console=None):
             oldout += line
     return last_prefix
 
-def main():
+def main(prog, filename=None):
     """
+    side
+    * To replay sessions from standard input.
     side file
-    * To output contents of file with sessions replayed.
-    side -i file
-    * To replay session and extend it by reading from console,
-    file can be - to read from stdin.
+    * To replay sessions from file.
     """
+    file = open(filename) if filename else sys.stdin
     console = Console()
     args = sys.argv
-    filename = '-' if len(args)==1 else args[-1]
-    last_prefix = testfile(filename, console=console)
+    last_prefix = runfile(file, console=console)
 
 if __name__=='__main__':
-    main()
+    main(*sys.argv)
 # >>> t=4
 # >>> t
 # 4
