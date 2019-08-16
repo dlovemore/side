@@ -73,7 +73,6 @@ def main(prog, filename=None):
     """
     file = open(filename) if filename else sys.stdin
     console = Console()
-    args = sys.argv
     last_prefix = runfile(file, console=console)
 
 if __name__=='__main__':
