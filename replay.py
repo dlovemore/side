@@ -1,7 +1,6 @@
 import sys
 import io
 import re
-import os
 from console import *
 
 ps1 = '>>> '
