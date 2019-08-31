@@ -77,8 +77,3 @@ def main(prog, filename=None):
 
 if __name__=='__main__':
     main(*sys.argv)
-# >>> t=4
-# >>> t
-# 4
-# >>> t
-# 4
