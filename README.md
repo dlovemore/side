@@ -44,6 +44,14 @@ These snippets of interactive use can then become tests.
 
 It's important to import code you need to run.
 
+## VIM macros
+
+Vim macros for use within vim. Use the command:
+
+:source vide.vim
+
+from within vim or .vimrc see example.vimrc for possible use.
+
 ## Interactions with source control
 
 It is a good practice to check diffs when committing changes. These
@@ -101,34 +109,13 @@ is run.
 
 * You need to import code you use.
 
-## Simplicity, modularity, orthogonality
-
-The idea being explored here is of small, modular components that can
-be combined in powerful ways.
-
-Although *SIDE* does not do the variety of things that *doctest* which
-inspired this component does, similar things may be achieved through
-judicious use of the right components.
-
-### Advantages of approach
-
-* Powerful tools can be constructed simply by using orthogonal
-combinations of components.
-* Swiss army knife tools that have a large number of functions or
-options can still be built, but they themselves become simpler, by
-being bullt out of combinations of simple components.
-* Functionality buried within useful tools become exposed and made 
-more generally available and useful.
-
-## Related components
-
-* vide - An IDE for vim built on top of side.
-* elide - An IDE for emacs built on top of side.
-* diff - A UN*X tool for comparing files
-
 ## Version information
 
-The current version is version 0.
+The current version is version 0.1
+
+### Version 0.1
+
+* Turn python code into regular package.
 
 ### Version 0
 
