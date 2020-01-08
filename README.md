@@ -2,8 +2,7 @@ Side Project
 ------------
 
 *SIDE* or *Simple Integrated Development Environment* is a poor man's IDE
-inspired by Python's *doctest* module and built on the idea of simple,
-modular and orthogonal components.
+inspired by Python's *doctest* module.
 
 ## Basic idea
 
@@ -18,8 +17,7 @@ commands as a simple test suite.
 
 Invoking **side** from within an editor (with appropriate editor
 macros) makes an easy way of running and capturing interactive sessions
-and turning them into a test suite.  (The projects **vide** and
-**elide** will provide vim and emacs macros that use **side**.)
+and turning them into a test suite.
 
 ## Interactive use within editors
 
@@ -48,21 +46,17 @@ It's important to import code you need to run.
 
 Vim macros for use within vim. Use the command:
 
-:source vide.vim
+:source side/vide.vim
 
 from within vim or .vimrc see example.vimrc for possible use.
 
 ## Interactions with source control
 
-It is a good practice to check diffs when committing changes. These
-highlight any changes that may have happened to expected output. This
-also allows test driven design.
+If diffs are checked when committing changes. These
+highlight any changes that may have happened to expected output.
 
 Tests can either accompany source code, or become slightly more formal
 separate tests.
-
-Keepng expected output when the output changes may be desirable. A
-syntax to indicate that may feature in a future version.
 
 ## Testing
 
@@ -94,13 +88,19 @@ before the docstrings.
 
 ## Installation
 
-I'm sorry, but this is still a prototype installation is manual.
+I'm sorry, but this is still a prototype. Installation is manual.
 
 Installation steps:
 
 * Download.
 * Make **side** executable.
 * Add to command line path.
+
+## Acknowledgements
+
+A big shout out to Jehovah, without whom none of this work would be
+possible, is meet. And to his son who gave me great comfort, through
+whom I have learned everything I know and understand.
 
 ## Troubleshooting
 
