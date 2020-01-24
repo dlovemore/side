@@ -1,7 +1,7 @@
 import sys
 import io
 import re
-from side.console import *
+from console import *
 
 ps1 = '>>> '
 ps2 = '... '
