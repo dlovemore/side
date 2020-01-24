@@ -34,9 +34,9 @@ function! PythonIReturn()
   let p = PythonPrompt()
   if p != ''
     if line('.') == line('$')
-      return "".AW().":1,$!sideGo0".p
+      return "".AW().":1,$!sideGo0".p
     endif
-    return "".AW().(line('.')+1)."Gmp:1,-!side'pO0".p
+    return "".AW().(line('.')+1)."Gmp:1,-!side'pO0".p
   elseif match(getline('.'), "^  *$") == 0
     return ""
   else
@@ -68,9 +68,9 @@ function! PythonNReturn()
   let p = PythonPrompt()
   if p != ''
     if line('.') == line('$')
-      return AW().":%!sideG$"
+      return AW().":%!sideG$"
     endif
-    return AW().(line('.')+1)."Gmp:1,-!side'p$"
+    return AW().(line('.')+1)."Gmp:1,-!side'p$"
   else
     return ""
   endif
@@ -86,9 +86,10 @@ function! PythonO()
 endfunction
 
 function! PythonI()
+  let l=line('.')
   let p = PythonPrompt()
   if p != ''
-    if len(p) >= len(getline('.'))
+    if len(p) >= len(getline(l))
       return 'A'
     else
       return ''.(len(p)+1).'|i'
