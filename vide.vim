@@ -23,7 +23,7 @@ function! PythonPrompt()
   return q
 endfunction
 
-function AW()
+function! AW()
     if &aw
       return ":w"
     end
