@@ -1,16 +1,17 @@
 import code
 import readline
 import sys
+import inspect
 
 ps1 = '>>> '
 ps2 = '... '
 
-def reportexcinfo(stopat=None, limit=None):
+def reportexcinfo(startat=None, limit=None):
     import inspect
     def reportvars(vs,limit=72):
         def reportvar(v,val):
             nonlocal limit
-            s='  '
+            s='    '
             try:
                 s+=str(v)+'='
                 s+=str(val)
@@ -21,20 +22,23 @@ def reportexcinfo(stopat=None, limit=None):
             return s[:limit]
         return ''.join([reportvar(v,val)+'\n'
             for v,val in vs.items() if v.find('_')!=0])
-    last_typei, last_value, last_traceback = sys.exc_info()
+    last_type, last_value, last_traceback = sys.exc_info()
     traceback=last_traceback
     s=''
+    on=False
     while traceback:
         frame = traceback.tb_frame
-        s+=str(inspect.getfile(frame.f_code))+':'
-        s+=str(traceback.tb_lineno)+':'
+        frameself=frame.f_locals.get('self')
+        if on:
+            s+=str(inspect.getfile(frame.f_code))+':'
+            s+=str(traceback.tb_lineno)+':'
+            s+=' '+str(last_value)
+            s+='\n'
+            # s+=reportvars(frame.f_globals,limit=limit)
+            s+=reportvars(frame.f_locals,limit=limit)
+        if startat==frameself:
+            on=True
         traceback=traceback.tb_next
-        if not traceback: s+=' '+str(last_value)
-        s+='\n'
-        s+=reportvars(frame.f_globals,limit=limit)
-        s+=reportvars(frame.f_locals,limit=limit)
-        s+=str(frame.f_locals.get('self'))+'\n'
-        s+=str(stopat.f_locals.get('self'))+'\n'
     return s
 
 class Console(code.InteractiveConsole):
@@ -42,10 +46,9 @@ class Console(code.InteractiveConsole):
     def write(self, data):
         print(data, end='', file=getattr(self, 'stream', sys.stdout))
     def showtraceback(self):
-        import inspect
-        self.write(reportexcinfo(stopat=inspect.currentframe()))
+        self.write(reportexcinfo(startat=self))
     def showsyntaxerror(self, filename=None):
-        last_typei, last_value, last_traceback = sys.exc_info()
+        last_type, last_value, last_traceback = sys.exc_info()
         s=str(last_value)
         self.write(s+'\n')
     def repl(self, prefix=""):
@@ -67,58 +70,47 @@ def console():
 if __name__=='__main__':
     console()
 
+# >>> i=1
+# >>> j
+# <console>:1: name 'j' is not defined
+#     i=1
 # >>> 
 # >>> x
-# /usr/lib/python3.6/code.py:91:
-#   sys=<module 'sys' (built-in)>
-#   traceback=<module 'traceback' from '/usr/lib/python3.6/traceback.py'>
-#   argparse=<module 'argparse' from '/usr/lib/python3.6/argparse.py'>
-#   CommandCompiler=<class 'codeop.CommandCompiler'>
-#   compile_command=<function compile_command at 0x7f7a060bb9d8>
-#   InteractiveInterpreter=<class 'code.InteractiveInterpreter'>
-#   InteractiveConsole=<class 'code.InteractiveConsole'>
-#   interact=<function interact at 0x7f7a06109158>
-#   code=<code object <module> at 0x7f7a061aaed0, file "<console>", line 1>
-#   self=<console.Console object at 0x7f7a07e67978>
-# <console.Console object at 0x7f7a07e67978>
-# <console.Console object at 0x7f7a07e67978>
 # <console>:1: name 'x' is not defined
-# None
-# <console.Console object at 0x7f7a07e67978>
+#     i=1
 # >>> 
 # >>> 
 # >>> x/0
-# /usr/lib/python3.6/code.py:91:
-#   sys=<module 'sys' (built-in)>
-#   traceback=<module 'traceback' from '/usr/lib/python3.6/traceback.py'>
-#   argparse=<module 'argparse' from '/usr/lib/python3.6/argparse.py'>
-#   CommandCompiler=<class 'codeop.CommandCompiler'>
-#   compile_command=<function compile_command at 0x7fa934fab9d8>
-#   InteractiveInterpreter=<class 'code.InteractiveInterpreter'>
-#   InteractiveConsole=<class 'code.InteractiveConsole'>
-#   interact=<function interact at 0x7fa934ff9158>
-#   code=<code object <module> at 0x7fa93509aed0, file "<console>", line 1>
-#   self=<console.Console object at 0x7fa936d57978>
-# <console.Console object at 0x7fa936d57978>
-# <console.Console object at 0x7fa936d57978>
 # <console>:1: name 'x' is not defined
-# None
-# <console.Console object at 0x7fa936d57978>
+#     i=1
+# >>> x/0
+# <console>:1: name 'x' is not defined
+#     i=1
 # >>> 3/0
-# /usr/lib/python3.6/code.py:91:
-#   sys=<module 'sys' (built-in)>
-#   traceback=<module 'traceback' from '/usr/lib/python3.6/traceback.py'>
-#   argparse=<module 'argparse' from '/usr/lib/python3.6/argparse.py'>
-#   CommandCompiler=<class 'codeop.CommandCompiler'>
-#   compile_command=<function compile_command at 0x7f2ad64249d8>
-#   InteractiveInterpreter=<class 'code.InteractiveInterpreter'>
-#   InteractiveConsole=<class 'code.InteractiveConsole'>
-#   interact=<function interact at 0x7f2ad6472158>
-#   code=<code object <module> at 0x7f2ad6497420, file "<console>", line 1>
-#   self=<console.Console object at 0x7f2ad81d0908>
-# <console.Console object at 0x7f2ad81d0908>
-# <console.Console object at 0x7f2ad81d0908>
 # <console>:1: division by zero
-# None
-# <console.Console object at 0x7f2ad81d0908>
+#     i=1
+# >>> class ee:
+# ...     def __str__(self): q
+# ... 
+# >>> e=ee()
+# >>> e
+# <__console__.ee object at 0x7fd311d75518>
+# >>> q
+# <console>:1: name 'q' is not defined
+#     i=1
+#     ee=<class '__console__.ee'>
+#     e=ERROR
+# >>> def f(x):
+# ...    y=3+x
+# ...    q
+# ... 
+# >>> f(1)
+# <console>:1: name 'q' is not defined
+#     i=1
+#     ee=<class '__console__.ee'>
+#     e=ERROR
+#     f=<function f at 0x7fd311d646a8>
+# <console>:3: name 'q' is not defined
+#     y=4
+#     x=1
 # >>> 
