@@ -6,9 +6,9 @@ import inspect
 ps1 = '>>> '
 ps2 = '... '
 
-def reportexcinfo(startat=None, limit=None):
+def reportexcinfo(startat=None, limit=72):
     import inspect
-    def reportvars(vs,limit=72):
+    def reportvars(vs,limit):
         def reportvar(v,val):
             nonlocal limit
             s='    '
@@ -94,7 +94,7 @@ if __name__=='__main__':
 # ... 
 # >>> e=ee()
 # >>> e
-# <__console__.ee object at 0x7fd311d75518>
+# <__console__.ee object at 0x7f36a49b64e0>
 # >>> q
 # <console>:1: name 'q' is not defined
 #     i=1
@@ -109,7 +109,7 @@ if __name__=='__main__':
 #     i=1
 #     ee=<class '__console__.ee'>
 #     e=ERROR
-#     f=<function f at 0x7fd311d646a8>
+#     f=<function f at 0x7f36a49a57b8>
 # <console>:3: name 'q' is not defined
 #     y=4
 #     x=1
