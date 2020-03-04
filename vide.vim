@@ -103,13 +103,9 @@ function! PythonS()
   let l=line('.')
   let p = PythonPrompt()
   if p != ''
-    if len(p) >= len(getline(l))
-      return 'S'
-    else
-      return 'S'.p
-    endif
+    return 'S'.p
   else
-    return 'I'
+    return 'S'
   endif
 endfunction
 
