@@ -7,7 +7,6 @@ ps1 = '>>> '
 ps2 = '... '
 
 def reportexcinfo(startat=None, limit=72):
-    import inspect
     def reportvars(vs,limit):
         def reportvar(v,val):
             nonlocal limit
@@ -33,7 +32,7 @@ def reportexcinfo(startat=None, limit=72):
             s+=str(inspect.getfile(frame.f_code))+':'
             s+=str(traceback.tb_lineno)+':'
             s+=' '+last_type.__name__
-            if str(last_value): s+=': '+s
+            if str(last_value): s+=': '+str(last_value)
             s+='\n'
             # s+=reportvars(frame.f_globals,limit=limit)
             s+=reportvars({k:frame.f_locals[k] for k in set(frame.f_locals)-set(frame.f_globals)},limit=limit)
@@ -73,11 +72,10 @@ if __name__=='__main__':
 
 # >>> i=1
 # >>> j
-# <console>:1: name 'j' is not defined
+# <console>:1: NameError: name 'j' is not defined
 # >>> 
 # >>> x
-# <console>:1: name 'x' is not defined
-# >>> 
+# <console>:1: NameError: name 'x' is not defined
 # >>> 
 # >>> x/0
 # <console>:1: name 'x' is not defined
