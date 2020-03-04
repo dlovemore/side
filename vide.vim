@@ -99,6 +99,20 @@ function! PythonI()
   endif
 endfunction
 
+function! PythonS()
+  let l=line('.')
+  let p = PythonPrompt()
+  if p != ''
+    if len(p) >= len(getline(l))
+      return 'S'
+    else
+      return 'S'.p
+    endif
+  else
+    return 'I'
+  endif
+endfunction
+
 function! PythonIndent()
   if &ai && getline('.')[len(getline('.'))-1] == ':'
     return ''
@@ -115,10 +129,21 @@ function! Pythono()
   endif
 endfunction
 
+function! PythonPrevPrompt()
+  return '?>>> nell'
+endfunction
+
+function! PythonNextPrompt()
+  return '/>>> ell'
+endfunction
+
 nnoremap <expr>  PythonNReturn()
 nnoremap <expr> O PythonO()
 nnoremap <expr> o Pythono()
 nnoremap <expr> I PythonI()
+nnoremap <expr> S PythonS()
+nnoremap <expr> [[ PythonPrevPrompt()
+nnoremap <expr> ]] PythonNextPrompt()
 
 nnoremap -g :normal! AW():%!side
 vnoremap -g :!side
