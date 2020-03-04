@@ -32,10 +32,11 @@ def reportexcinfo(startat=None, limit=72):
         if on:
             s+=str(inspect.getfile(frame.f_code))+':'
             s+=str(traceback.tb_lineno)+':'
-            s+=' '+str(last_value)
+            s+=' '+last_type.__name__
+            if str(last_value): s+=': '+s
             s+='\n'
             # s+=reportvars(frame.f_globals,limit=limit)
-            s+=reportvars(frame.f_locals,limit=limit)
+            s+=reportvars({k:frame.f_locals[k] for k in set(frame.f_locals)-set(frame.f_globals)},limit=limit)
         if startat==frameself:
             on=True
         traceback=traceback.tb_next
@@ -73,44 +74,32 @@ if __name__=='__main__':
 # >>> i=1
 # >>> j
 # <console>:1: name 'j' is not defined
-#     i=1
 # >>> 
 # >>> x
 # <console>:1: name 'x' is not defined
-#     i=1
 # >>> 
 # >>> 
 # >>> x/0
 # <console>:1: name 'x' is not defined
-#     i=1
 # >>> x/0
 # <console>:1: name 'x' is not defined
-#     i=1
 # >>> 3/0
 # <console>:1: division by zero
-#     i=1
 # >>> class ee:
 # ...     def __str__(self): q
 # ... 
 # >>> e=ee()
 # >>> e
-# <__console__.ee object at 0x7f36a49b64e0>
+# <__console__.ee object at 0x7f2d7452c5f8>
 # >>> q
 # <console>:1: name 'q' is not defined
-#     i=1
-#     ee=<class '__console__.ee'>
-#     e=ERROR
 # >>> def f(x):
 # ...    y=3+x
 # ...    q
 # ... 
 # >>> f(1)
 # <console>:1: name 'q' is not defined
-#     i=1
-#     ee=<class '__console__.ee'>
-#     e=ERROR
-#     f=<function f at 0x7f36a49a57b8>
 # <console>:3: name 'q' is not defined
-#     y=4
 #     x=1
+#     y=4
 # >>> 
