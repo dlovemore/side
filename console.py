@@ -78,26 +78,26 @@ if __name__=='__main__':
 # <console>:1: NameError: name 'x' is not defined
 # >>> 
 # >>> x/0
-# <console>:1: name 'x' is not defined
+# <console>:1: NameError: name 'x' is not defined
 # >>> x/0
-# <console>:1: name 'x' is not defined
+# <console>:1: NameError: name 'x' is not defined
 # >>> 3/0
-# <console>:1: division by zero
+# <console>:1: ZeroDivisionError: division by zero
 # >>> class ee:
 # ...     def __str__(self): q
 # ... 
 # >>> e=ee()
 # >>> e
-# <__console__.ee object at 0x7f2d7452c5f8>
+# <__console__.ee object at 0xb652f870>
 # >>> q
-# <console>:1: name 'q' is not defined
+# <console>:1: NameError: name 'q' is not defined
 # >>> def f(x):
 # ...    y=3+x
 # ...    q
 # ... 
 # >>> f(1)
-# <console>:1: name 'q' is not defined
-# <console>:3: name 'q' is not defined
-#     x=1
+# <console>:1: NameError: name 'q' is not defined
+# <console>:3: NameError: name 'q' is not defined
 #     y=4
+#     x=1
 # >>> 
