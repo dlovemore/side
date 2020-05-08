@@ -33,11 +33,18 @@ def codetext(code):
         t=f.readlines()
     fun=t[code.co_firstlineno-1:]
     lead=leadin(fun[0])
-    for i,l in enumerate(fun[1:], start=1):
-        ll=leadin(l)
-        if ll is not None and ll<=lead:
-            fun=fun[:i]
+    i=0
+    while True:
+        if fun[i:i+1][lead:lead+1]=='@':
+            i+=1
+        else:
             break
+    for i,l in enumerate(fun[i:], start=i):
+        ll=leadin(l)
+        if ll is not None:
+            if ll<=lead:
+                fun=fun[:i]
+                break
     return (''.join(fun))
 
 def reportexcinfo(startat=None, limit=72):
