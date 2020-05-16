@@ -126,11 +126,11 @@ function! Pythono()
 endfunction
 
 function! PythonPrevPrompt()
-  return '?>>> nell'
+  return '?>>> .\{0,1}?e'
 endfunction
 
 function! PythonNextPrompt()
-  return '/>>> ell'
+  return '/>>> .\?/e'
 endfunction
 
 nnoremap <expr>  PythonNReturn()
