@@ -100,10 +100,9 @@ function! PythonI()
 endfunction
 
 function! PythonS()
-  let l=line('.')
   let p = PythonPrompt()
   if p != ''
-    return 'S'.p
+    return 'S0'.p
   else
     return 'S'
   endif
@@ -125,6 +124,19 @@ function! Pythono()
   endif
 endfunction
 
+function! PythonThisPrompt()
+  let p = PythonPrompt()
+  if p != ''
+    return '0'.PythonNextPrompt()
+  else
+    return '0'
+  endif
+endfunction
+
+function IPythonThisPrompt()
+  return '0'.PythonNextPrompt()
+endfunction
+
 function! PythonPrevPrompt()
   return '?>>> .\{0,1}?e'
 endfunction
@@ -140,6 +152,8 @@ nnoremap <expr> I PythonI()
 nnoremap <expr> S PythonS()
 nnoremap <expr> [[ PythonPrevPrompt()
 nnoremap <expr> ]] PythonNextPrompt()
+inoremap <expr>  IPythonThisPrompt()
+noremap <expr> - PythonThisPrompt()
 
 nnoremap -g :normal! AW():%!side
 vnoremap -g :!side
