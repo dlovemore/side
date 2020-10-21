@@ -41,13 +41,15 @@ function! PythonIReturn()
     return ""
   else
     let block = (getline('.') =~ "^ *\\(if \\|def \\|elif \\|else\\|for \\|while \\|try\\|class \\|with \\)")
-    let colon = getline('.')[getcurpos()[2]-2]==':'
+    let colon = (getline('.') =~ ":")
+    let endcolon = getline('.')[getcurpos()[2]-2]==':'
     if block && colon
       if &ai
-        return ""
-      else
-        return ""
+        if endcolon
+            return ""
+        endif
       endif
+      return ""
     endif
     if block && !colon
       if &ai
@@ -60,6 +62,23 @@ function! PythonIReturn()
   endif
 endfunction
 inoremap <expr>  PythonIReturn()
+
+function! PythonR()
+    let ch = getchar()
+    let ch = nr2char(ch)
+    let colon = getline('.')[getcurpos()[2]-2]==':'
+    if ch==""
+        if colon
+            if &ai
+                return "s"
+            endif
+        endif
+    endif
+    return "r" . ch
+endfunction
+nnoremap <expr> r PythonR()
+
+
 
 function! CurChar()
 endfunction
